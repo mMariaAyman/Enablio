@@ -1,18 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FAF6F0"
+    android:padding="10dp"
+    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Good Morningtt!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingStart="15dp"
+        android:backgroundTint="#F4EAE0"
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:background="@drawable/shape">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/login"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            />
+
+        <EditText
+            android:id="@+id/nameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:autofillHints="name"
+            android:hint="Name"
+            android:background="@drawable/shape"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:outlineProvider="background"
+            android:backgroundTint="#F4DFC8"
+            />
+        <EditText
+            android:id="@+id/phoneTxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:autofillHints="phone"
+            android:hint="Phone"
+            android:maxLength="11"
+            android:background="@drawable/shape"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:outlineProvider="background"
+            android:backgroundTint="#F4DFC8"
+            />
+        <EditText
+            android:id="@+id/emailTxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:autofillHints="emailAddress"
+            android:hint="Email"
+            android:background="@drawable/shape"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:outlineProvider="background"
+            android:backgroundTint="#F4DFC8"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true">
+            <EditText
+                android:id="@+id/passTxt"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:autofillHints="password"
+                android:hint="Password"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape"
+                android:backgroundTint="#F4DFC8"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            >
+        <EditText
+                android:id="@+id/conPassTxt"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:autofillHints="password"
+                android:hint="Confirm Password"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#F4DFC8"
+                android:background="@drawable/shape"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/signBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Sign up"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginRedirectText"
+            android:text="Have an account Login!"
+            android:textColor="@color/teal_700"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            />
+    </LinearLayout>
+</LinearLayout>

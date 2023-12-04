@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "670808720575",
+    "project_id": "enablio-24d8c",
+    "storage_bucket": "enablio-24d8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670808720575:android:a782a1301f94ee7f24b20a",
+        "android_client_info": {
+          "package_name": "com.example.enablio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCuMtUkfsDH24oGwMxWXXYBz1l8UXDy4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
