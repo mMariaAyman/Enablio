@@ -2,12 +2,10 @@ package com.example.enablio
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.enablio.databinding.ActivityHomeBinding
-import com.google.firebase.Firebase
-import com.google.firebase.database.database
+import com.example.enablio.databinding.ActivityHomeDisBinding
 
-class home : AppCompatActivity() {
-    private lateinit var binding:ActivityHomeBinding
+class HomeDis : AppCompatActivity() {
+    private lateinit var binding:ActivityHomeDisBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

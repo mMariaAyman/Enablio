@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.disBtn.setOnClickListener {
-            val intent = Intent(this, LoginDis::class.java)
+            val intent = Intent(this,LoginDis::class.java)
             startActivity(intent)
         }
     }
