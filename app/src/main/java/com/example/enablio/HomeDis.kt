@@ -8,6 +8,7 @@ class HomeDis : AppCompatActivity() {
     private lateinit var binding:ActivityHomeDisBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeDisBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
     }

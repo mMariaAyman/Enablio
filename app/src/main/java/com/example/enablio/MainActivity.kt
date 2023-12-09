@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.volBtn.setOnClickListener {
             val intent = Intent(this, LoginVol::class.java)
             startActivity(intent)

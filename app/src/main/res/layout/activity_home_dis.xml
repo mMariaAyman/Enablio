@@ -4,20 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".HomeDis"
     android:orientation="vertical"
+    android:background="@drawable/home"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="30dp"
     android:layout_gravity="center"
     android:gravity="center">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/home">
-
-
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -34,7 +27,6 @@
             android:textSize="25sp"
             android:textColor="@color/black"
             />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,8 +51,7 @@
                 android:layout_marginStart="30dp"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:gravity="end
-"/>
+                android:gravity="end"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,4 +78,3 @@
     </LinearLayout>
 
 
-</LinearLayout>
