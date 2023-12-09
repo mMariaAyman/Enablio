@@ -13,7 +13,14 @@
         android:theme="@style/Theme.Enablio"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
+            android:name=".SignupVolunteer"
+            android:exported="false" />
+        <activity
+            android:name=".SignupDisabled"
+            android:exported="false" />
+
+        <activity
+            android:name=".LoginDis"
             android:exported="false" />
         <activity
             android:name=".home"
@@ -27,6 +34,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

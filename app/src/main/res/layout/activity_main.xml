@@ -1,130 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".MainActivity"
     android:orientation="vertical"
+    android:background="@color/blue"
     android:gravity="center"
-    android:background="#FAF6F0"
-    android:padding="10dp"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:backgroundTint="#F4EAE0"
-        android:padding="15dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
         android:orientation="vertical"
-        android:background="@drawable/shape">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/login"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            />
-
-        <EditText
-            android:id="@+id/nameTxt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:autofillHints="name"
-            android:hint="Name"
-            android:background="@drawable/shape"
-            android:inputType="textPersonName"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:outlineProvider="background"
-            android:backgroundTint="#F4DFC8"
-            />
-        <EditText
-            android:id="@+id/phoneTxt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:autofillHints="phone"
-            android:hint="Phone"
-            android:maxLength="11"
-            android:background="@drawable/shape"
-            android:inputType="phone"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:outlineProvider="background"
-            android:backgroundTint="#F4DFC8"
-            />
-        <EditText
-            android:id="@+id/emailTxt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:autofillHints="emailAddress"
-            android:hint="Email"
-            android:background="@drawable/shape"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:outlineProvider="background"
-            android:backgroundTint="#F4DFC8"
-            />
-        <com.google.android.material.textfield.TextInputLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true">
-            <EditText
-                android:id="@+id/passTxt"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:autofillHints="password"
-                android:hint="Password"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/shape"
-                android:backgroundTint="#F4DFC8"
-                android:inputType="textPassword"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
             >
-        <EditText
-                android:id="@+id/conPassTxt"
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:src="@drawable/start" />
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:autofillHints="password"
-                android:hint="Confirm Password"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#F4DFC8"
-                android:background="@drawable/shape"
-                android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <Button
-            android:id="@+id/signBtn"
+                android:layout_height="120dp"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:text="enablio"
+                android:textSize="60sp"
+                android:layout_gravity="start"
+                android:gravity="center_vertical"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Sign up"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/loginRedirectText"
-            android:text="Have an account Login!"
-            android:textColor="@color/teal_700"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:orientation="vertical"
             android:layout_gravity="center"
             android:gravity="center"
-            android:paddingTop="10dp"
-            />
+
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:text="Guiding Hands, Connecting Hearts"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:textColor="@color/green"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <Button
+                android:id="@+id/volBtn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_background"
+                android:text="Volunteer"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                />
+
+            <Button
+                android:id="@+id/disBtn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:fontFamily="@font/roboto"
+                android:text="Disabled"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textSize="20dp" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

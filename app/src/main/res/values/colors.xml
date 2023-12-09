@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="home">#936FFF</color>
+    <color name="blue">#0F63EA</color>
+    <color name="button_blue">#2E77EC</color>
+    <color name="green">#14C267</color>
+    <color name="red">#F44336</color>
+
+
 </resources>
