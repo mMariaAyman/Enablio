@@ -7,12 +7,13 @@
     tools:context=".HomeVol"
     android:orientation="vertical"
     android:background="@drawable/home"
-    android:layout_marginTop="30dp"
-    android:layout_marginBottom="30dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginBottom="40dp"
     android:layout_gravity="center"
-    android:gravity="center">
+    android:gravity="center"
+    >
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"

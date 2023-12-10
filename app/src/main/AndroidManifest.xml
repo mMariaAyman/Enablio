@@ -34,6 +34,9 @@
             android:name=".LoginDis"
             android:exported="false" />
         <activity
+            android:name=".LoginVol"
+            android:exported="false" />
+        <activity
             android:name=".HomeDis"
             android:exported="false" />
         <activity

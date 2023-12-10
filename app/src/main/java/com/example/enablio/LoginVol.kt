@@ -10,21 +10,24 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginVol : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var fb:FirebaseAuth
+    private lateinit var fb: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
         setContentView(binding.root)
         binding.loginBtn.setOnClickListener {
             val intent = Intent(this, HomeVol::class.java)
             startActivity(intent)
         }
         binding.signRedirectText.setOnClickListener {
-           val intent = Intent(this, SignupVolunteer::class.java)
+            val intent = Intent(this, SignupVolunteer::class.java)
             startActivity(intent)
         }
-       /* binding.loginBtn.setOnClickListener {
+        /* binding.loginBtn.setOnClickListener {
             val email = binding.emailTxt.text.toString()
             val pass = binding.passTxt.text.toString()
             if(email.isNotEmpty() && pass.isNotEmpty()){
