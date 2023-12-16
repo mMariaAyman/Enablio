@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "670808720575",
-    "project_id": "enablio-24d8c",
-    "storage_bucket": "enablio-24d8c.appspot.com"
+    "project_number": "810652911335",
+    "firebase_url": "https://enablio2023-default-rtdb.firebaseio.com",
+    "project_id": "enablio2023",
+    "storage_bucket": "enablio2023.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:670808720575:android:a782a1301f94ee7f24b20a",
+        "mobilesdk_app_id": "1:810652911335:android:2d6f68c1f11dd68b3c0442",
         "android_client_info": {
           "package_name": "com.example.enablio"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDCuMtUkfsDH24oGwMxWXXYBz1l8UXDy4s"
+          "current_key": "AIzaSyDjSZC1BHYxRTwg1ej0YNSsEOZmskF2q9I"
         }
       ],
       "services": {

@@ -14,8 +14,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val intent = Intent(this, Suggestions::class.java)
-        startActivity(intent)
         binding.volBtn.setOnClickListener {
             val intent = Intent(this, LoginVol::class.java)
             startActivity(intent)
