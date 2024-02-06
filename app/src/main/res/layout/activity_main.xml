@@ -7,13 +7,14 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:background="@drawable/home"
-    android:layout_marginBottom="30dp"
-    android:layout_marginTop="30dp"    android:gravity="center"
+    android:layout_marginBottom="35dp"
+    android:layout_marginTop="35dp"
+    android:gravity="center"
     android:layout_gravity="center"
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape"
         android:orientation="vertical"
         android:layout_gravity="center"
@@ -38,7 +39,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/blue"
                 android:text="enablio"
-                android:textSize="60sp"
+                android:textSize="50sp"
                 android:layout_gravity="start"
                 android:gravity="center_vertical"
                 />

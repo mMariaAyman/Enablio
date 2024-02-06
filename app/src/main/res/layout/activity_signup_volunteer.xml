@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/home"
-    android:layout_marginBottom="30dp"
-    android:layout_marginTop="30dp"   >
+    android:layout_marginBottom="35dp"
+    android:layout_marginTop="35dp"   >
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

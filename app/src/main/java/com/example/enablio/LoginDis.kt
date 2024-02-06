@@ -25,6 +25,9 @@ class LoginDis : AppCompatActivity() {
            val intent = Intent(this, SignupDisabled::class.java)
             startActivity(intent)
         }
+        binding.forgetPass.setOnClickListener {
+            val intent = Intent(this,ForgetPass::class.java)
+        }
        /* binding.loginBtn.setOnClickListener {
             val email = binding.emailTxt.text.toString()
             val pass = binding.passTxt.text.toString()
