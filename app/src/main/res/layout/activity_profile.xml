@@ -1,9 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".Profile"
+    android:background="@drawable/home"
+    android:orientation="vertical"
+    android:layout_marginBottom="30dp"
+    android:layout_marginTop="30dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="80dp"
+        >
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@mipmap/profile"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="Maria Ayman"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/roboto"/>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/edit_nameTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:hint="Name"/>
+    <EditText
+        android:id="@+id/edit_emailTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="40dp"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:hint="Email"/>
+    <EditText
+        android:id="@+id/gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:hint="Gender"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:inputType="text" />
+   <Button
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Upload profile photo"
+       android:textAllCaps="false"
+       android:layout_gravity="center"
+       android:layout_marginTop="40dp"
+       android:layout_marginEnd="20dp"
+       android:layout_marginStart="20dp"
+       android:textSize="16sp"
+       android:fontFamily="@font/arimo"
+       android:background="@drawable/form"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+
+        >
+
+    <Button
+        android:id="@+id/save_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="Save"
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="50dp"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/delete_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:text="Delete"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:gravity="center"/>
+    </LinearLayout>
+
+</LinearLayout>

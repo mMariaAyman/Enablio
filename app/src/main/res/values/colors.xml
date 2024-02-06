@@ -12,6 +12,7 @@
     <color name="button_blue">#2E77EC</color>
     <color name="green">#14C267</color>
     <color name="red">#F44336</color>
+    <color name="gray">#AEAEAE</color>
 
 
 </resources>
