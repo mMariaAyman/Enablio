@@ -44,12 +44,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:textColorHint="@color/gray"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:drawableStart="@drawable/personblue"
         android:hint="Name"/>
     <EditText
         android:id="@+id/edit_emailTxt"
@@ -58,10 +59,11 @@
         android:padding="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:textColorHint="@color/gray"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:drawableStart="@drawable/emailblue"
         android:hint="Email"/>
     <EditText
         android:id="@+id/gender"
@@ -70,11 +72,12 @@
         android:padding="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:hint="Gender"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
+        android:drawableStart="@drawable/genderblue"
         android:inputType="text" />
    <Button
        android:id="@+id/uploadPhoto"
