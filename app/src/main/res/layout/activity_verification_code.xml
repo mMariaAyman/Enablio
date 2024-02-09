@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ForgetPass"
+    tools:context=".VerificationCode"
     android:orientation="vertical"
     android:background="@drawable/home"
     android:layout_marginTop="30dp"
@@ -15,12 +15,26 @@
     >
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:src="@drawable/forgetpass"/>
+        android:layout_height="300dp"
+        android:src="@drawable/verificationcode"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter your phone number to reset your password"
+        android:text="Enter Verification Code"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/arimo"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the 4 digits code that you received at your phone "
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
@@ -30,58 +44,58 @@
         android:fontFamily="@font/arimo"
         android:textStyle="bold"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        >
-
-        <TextView
-            android:layout_width="86dp"
-            android:layout_height="49dp"
-            android:layout_marginLeft="21dp"
-            android:background="@drawable/form"
-            android:gravity="center"
-            android:text="+20"
-            android:textSize="24sp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:hint="Phone Number"
+            android:hint=""
             android:background="@drawable/form"
             android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center"
             android:gravity="center"
+            android:inputType="number"
             android:textColorHint="@color/gray"
             android:textColor="@color/black"
             android:textSize="20sp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="If you didn't receive a code "
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:fontFamily="@font/arimo"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Receive"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:fontFamily="@font/arimo"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            />
     </LinearLayout>
+
     <Button
         android:id="@+id/verifyBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="Verify"
+        android:text="Send"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="19dp"
         android:layout_marginTop="20dp"
 
         />
-    <TextView
-        android:id="@+id/newAccountBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="create a new account !"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/arimo"
-        android:textColor="@color/black"
-        android:layout_marginTop="22dp"/>
 
 </LinearLayout>
