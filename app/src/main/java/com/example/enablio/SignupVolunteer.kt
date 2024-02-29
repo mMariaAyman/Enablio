@@ -39,10 +39,10 @@ class SignupVolunteer : AppCompatActivity() {
                             childrenCount = dataSnapshot.childrenCount
                             dataSnapshot.children.forEach { snapshot ->
                                 val storedEmail = snapshot.child("email").getValue(String::class.java)
-                                    if (storedEmail == email) {
-                                        flag = 0 // Set flag to 0 if a match is found
-                                        return@forEach
-                                    }
+                                if (storedEmail == email) {
+                                    flag = 0 // Set flag to 0 if a match is found
+                                    return@forEach
+                                }
                             }
                         }
                     }
@@ -83,6 +83,16 @@ class SignupVolunteer : AppCompatActivity() {
             }else {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.google.setOnClickListener{
+
+        }
+        binding.facebook.setOnClickListener {
+
+        }
+        binding.linkedin.setOnClickListener {
+
         }
     }
 }
