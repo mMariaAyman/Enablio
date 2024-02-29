@@ -20,14 +20,14 @@ class SignupVolunteer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupVolunteerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setTitle("SignUp")
+        title = "SignUp"
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         rootFBRef = FirebaseDatabase.getInstance().reference.child("Volunteer")
-        var flag:Int = 0
+        var flag = 0
 
         binding.signBtn.setOnClickListener {
             val name = binding.nameTxt.text.toString()
-            val email = binding.emailTxt.text.toString()
+            var email = binding.emailTxt.text.toString()
             val password = binding.passTxt.text.toString()
             val conPassword = binding.conPassTxt.text.toString()
             val signLanguage = binding.yes.isChecked
@@ -38,13 +38,11 @@ class SignupVolunteer : AppCompatActivity() {
                         if (dataSnapshot.exists()) {
                             childrenCount = dataSnapshot.childrenCount
                             dataSnapshot.children.forEach { snapshot ->
-                                snapshot.children.forEach { childSnapshot ->
-                                    val storedEmail = childSnapshot.getValue(String::class.java)
+                                val storedEmail = snapshot.child("email").getValue(String::class.java)
                                     if (storedEmail == email) {
                                         flag = 0 // Set flag to 0 if a match is found
-                                        return@forEach // Break out of the loop
+                                        return@forEach
                                     }
-                                }
                             }
                         }
                     }
@@ -79,7 +77,8 @@ class SignupVolunteer : AppCompatActivity() {
                 }
                 else{
                     Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
-                    //binding.emailTxt.text.clear()
+                    binding.emailTxt.text.clear()
+                    email = binding.emailTxt.text.toString()
 
                 }
             }else {
