@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/nameTxt"
+            android:labelFor="@+id/dnameTxt"
             android:layout_marginStart="20dp"
             android:text="Name"
             android:textColor="@color/black"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         >
         <EditText
-            android:id="@+id/nameTxt"
+            android:id="@+id/dnameTxt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
@@ -48,7 +48,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/emailTxt"
+            android:labelFor="@+id/demailTxt"
             android:layout_marginStart="20dp"
             android:text="Email"
             android:textColor="@color/black"
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         >
         <EditText
-            android:id="@+id/emailTxt"
+            android:id="@+id/demailTxt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:labelFor="@+id/passTxt"
+            android:labelFor="@+id/dpassTxt"
             android:text="Password"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true">
         <EditText
-            android:id="@+id/passTxt"
+            android:id="@+id/dpassTxt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
@@ -118,7 +118,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@+id/conPassTxt"
+            android:labelFor="@+id/dconPassTxt"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/roboto"
             android:text="Confirm Password"
@@ -134,7 +134,7 @@
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true">
         <EditText
-            android:id="@+id/conPassTxt"
+            android:id="@+id/dconPassTxt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:autofillHints="password"
@@ -204,7 +204,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/signBtn"
+        android:id="@+id/dsignBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

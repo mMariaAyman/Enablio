@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ForgetPass"
     android:orientation="vertical"
     android:background="@drawable/home"
     android:layout_marginTop="30dp"
     android:layout_marginBottom="30dp"
     android:layout_gravity="center"
     android:gravity="center"
-
     >
     <ImageView
         android:layout_width="match_parent"

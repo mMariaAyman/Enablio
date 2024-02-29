@@ -13,10 +13,13 @@
         android:theme="@style/Theme.Enablio"
         tools:targetApi="31">
         <activity
-            android:name=".VerificationCode"
+            android:name=".NewPassDis"
             android:exported="false" />
         <activity
-            android:name=".ForgetPass"
+            android:name=".VerificationCodeDis"
+            android:exported="false" />
+        <activity
+            android:name=".ForgetPassDis"
             android:exported="false" />
         <activity
             android:name=".Suggestions"

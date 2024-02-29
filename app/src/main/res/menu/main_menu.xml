@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/dropdown_menu_Profile"
+        android:title="My Profile"
+        app:actionLayout="@layout/activity_main"/>
+    <item
+        android:id="@+id/dropdown_menu_Suggestions"
+        android:title="Suggestions&amp;Complains" />
+    <item
+        android:id="@+id/dropdown_menu_Contactus"
+        android:title="Contact Us" />
+    <item
+        android:id="@+id/dropdown_menu_Logout"
+        android:title="Logout" />
+
+</menu>

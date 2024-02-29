@@ -16,6 +16,7 @@ class LoginDis : AppCompatActivity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle("Login")
 
         binding.loginBtn.setOnClickListener {
            val intent = Intent(this, HomeDis::class.java)
@@ -26,7 +27,8 @@ class LoginDis : AppCompatActivity() {
             startActivity(intent)
         }
         binding.forgetPass.setOnClickListener {
-            val intent = Intent(this,ForgetPass::class.java)
+            val intent = Intent(this,ForgetPassDis::class.java)
+            startActivity(intent)
         }
        /* binding.loginBtn.setOnClickListener {
             val email = binding.emailTxt.text.toString()

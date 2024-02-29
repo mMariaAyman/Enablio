@@ -4,4 +4,10 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+    <string name="home">Home</string>
+    <string name="contactUs">Contact Us</string>
+    <string name="login">Login</string>
+    <string name="profile">My Profile</string>
+    <string name="suggestions">Suggestions &amp; Complains</string>
+
 </resources>

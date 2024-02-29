@@ -16,21 +16,22 @@ class SignupDisabled : AppCompatActivity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //setContentView(R.layout.activity_main)
+        setTitle("SignUp")
 
         binding = ActivitySignupDisabledBinding.inflate(layoutInflater)
         setContentView(binding.root)
         fb = FirebaseAuth.getInstance()
-        binding.signBtn.setOnClickListener {
-            val name = binding.nameTxt.text.toString()
-            val email = binding.emailTxt.text.toString()
-            val pass = binding.passTxt.text.toString()
-            val conPass = binding.conPassTxt.text.toString()
+        binding.dsignBtn.setOnClickListener {
+            val name = binding.dnameTxt.text.toString()
+            val email = binding.demailTxt.text.toString()
+            val pass = binding.dpassTxt.text.toString()
+            val conPass = binding.dconPassTxt.text.toString()
             if(email.isNotEmpty() && pass.isNotEmpty() &&name.isNotEmpty()
                 &&conPass.isNotEmpty()){
                 if(pass==conPass){
                     fb.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                         if(it.isSuccessful){
-                            val intent = Intent(this, LoginDis::class.java)
+                            val intent = Intent(this, HomeDis::class.java)
                             startActivity(intent)
                         }
                         else
@@ -38,7 +39,6 @@ class SignupDisabled : AppCompatActivity() {
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()
                         }
                     }
-
                 }
                 else
                 {
@@ -49,10 +49,7 @@ class SignupDisabled : AppCompatActivity() {
             {
                 Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
             }
-
         }
-
-
     }
     /*  val btn: Button = findViewById(R.id.signBtn)
       val name:EditText = findViewById(R.id.nameTxt)
