@@ -23,7 +23,7 @@ class SignupVolunteer : AppCompatActivity() {
         title = "SignUp"
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         rootFBRef = FirebaseDatabase.getInstance().reference.child("Volunteer")
-        var flag = 0
+        var flag = 5
 
         binding.signBtn.setOnClickListener {
             val name = binding.nameTxt.text.toString()
@@ -34,7 +34,7 @@ class SignupVolunteer : AppCompatActivity() {
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && conPassword.isNotEmpty()) {
                 rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        flag = 1 // Set the initial value of flag to 1
+                        flag = 1
                         if (dataSnapshot.exists()) {
                             childrenCount = dataSnapshot.childrenCount
                             dataSnapshot.children.forEach { snapshot ->
@@ -46,14 +46,13 @@ class SignupVolunteer : AppCompatActivity() {
                             }
                         }
                     }
-
                     override fun onCancelled(databaseError: DatabaseError) {
                         // Handle the error if the operation is canceled or fails
                     }
                 })
                 if (flag == 1) {
                     if (password == conPassword) {
-                        val volunteer = Volunteer_data(name, email, password, signLanguage)
+                        val volunteer = Volunteer_data(name, email, password, signLanguage, "", "")
 
                         rootFBRef.child((childrenCount + 1).toString()).setValue(volunteer)
                             .addOnSuccessListener {
@@ -75,10 +74,10 @@ class SignupVolunteer : AppCompatActivity() {
                         binding.conPassTxt.text.clear()
                     }
                 }
-                else{
+                else if(flag==0){
                     Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
                     binding.emailTxt.text.clear()
-                    email = binding.emailTxt.text.toString()
+                    email = ""
 
                 }
             }else {
