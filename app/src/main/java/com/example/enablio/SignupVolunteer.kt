@@ -32,68 +32,65 @@ class SignupVolunteer : AppCompatActivity() {
             val conPassword = binding.conPassTxt.text.toString()
             val signLanguage = binding.yes.isChecked
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && conPassword.isNotEmpty()) {
-                rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        flag = 1
-                        if (dataSnapshot.exists()) {
-                            childrenCount = dataSnapshot.childrenCount
-                            dataSnapshot.children.forEach { snapshot ->
-                                val storedEmail = snapshot.child("email").getValue(String::class.java)
-                                if (storedEmail == email) {
-                                    flag = 0 // Set flag to 0 if a match is found
-                                    return@forEach
+                if (password == conPassword) {
+                    if (password.length >= 8) {
+                        rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                flag = 1
+                                if (dataSnapshot.exists()) {
+                                    childrenCount = dataSnapshot.childrenCount
+                                    dataSnapshot.children.forEach { snapshot ->
+                                        val storedEmail = snapshot.child("email").getValue(String::class.java)
+                                        if (storedEmail == email) {
+                                            flag = 0 // Set flag to 0 if a match is found
+                                            return@forEach
+                                        }
+                                    }
                                 }
                             }
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                // Handle the error if the operation is canceled or fails
+                            }
+                        })
+                        if (flag == 1) {
+                            val volunteer = Volunteer_data(name, email, password, signLanguage, "", "")
+                            rootFBRef.child((childrenCount + 1).toString()).setValue(volunteer)
+                                .addOnSuccessListener {
+                                    Toast.makeText(
+                                        this,
+                                        "Volunteer Added Successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    val intent = Intent(this, HomeVol::class.java)
+                                    startActivity(intent)
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
+                                }
+                        }else if(flag==0){
+                            Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
+                            binding.emailTxt.text.clear()
+                            email = ""
+
                         }
-                    }
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        // Handle the error if the operation is canceled or fails
-                    }
-                })
-                if (flag == 1) {
-                    if (password == conPassword) {
-                        val volunteer = Volunteer_data(name, email, password, signLanguage, "", "")
 
-                        rootFBRef.child((childrenCount + 1).toString()).setValue(volunteer)
-                            .addOnSuccessListener {
-                                Toast.makeText(
-                                    this,
-                                    "Volunteer Added Successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                val intent = Intent(this, HomeVol::class.java)
-                                startActivity(intent)
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
-                            }
-                    } else {
-                        Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
-                            .show()
-                        binding.passTxt.text.clear()
-                        binding.conPassTxt.text.clear()
+                    }else{
+                        Toast.makeText(this, "Password should at least contain 8 characters", Toast.LENGTH_SHORT).show()
                     }
+                }else{
+                    Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
+                        .show()
+                    binding.passTxt.text.clear()
+                    binding.conPassTxt.text.clear()
                 }
-                else if(flag==0){
-                    Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
-                    binding.emailTxt.text.clear()
-                    email = ""
 
-                }
             }else {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }
         }
 
-        binding.google.setOnClickListener{
-            
-
-        }
-        binding.facebook.setOnClickListener {
-
-        }
-        binding.linkedin.setOnClickListener {
-
-        }
+        binding.google.setOnClickListener{}
+        binding.facebook.setOnClickListener {}
+        binding.linkedin.setOnClickListener {}
     }
 }

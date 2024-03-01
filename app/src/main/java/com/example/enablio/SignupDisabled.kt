@@ -57,21 +57,25 @@ class SignupDisabled : AppCompatActivity() {
                 })
                 if (flag == 1) {
                     if (password == conPassword) {
-                        val disabled = Disabled_data(name, email, password, disability, "", "")
-                        rootFBRef.child((childrenCount + 1).toString()).setValue(disabled)
-                            .addOnSuccessListener {
-                                Toast.makeText(
-                                    this,
-                                    "Disabled Added Successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                val intent = Intent(this, HomeDis::class.java)
-                                startActivity(intent)
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
-                            }
-                    } else {
+                        if (password.length >= 8) {
+                            val disabled = Disabled_data(name, email, password, disability, "", "")
+                            rootFBRef.child((childrenCount + 1).toString()).setValue(disabled)
+                                .addOnSuccessListener {
+                                    Toast.makeText(
+                                        this,
+                                        "Disabled Added Successfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    val intent = Intent(this, HomeDis::class.java)
+                                    startActivity(intent)
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
+                                }
+                        }else{
+                            Toast.makeText(this, "Password should at least contain 8 characters", Toast.LENGTH_SHORT).show()
+                        }
+                    }else {
                         Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
                             .show()
                         binding.dpassTxt.text.clear()
