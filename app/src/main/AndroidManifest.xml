@@ -61,6 +61,19 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <!-- Google Sign in
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+         Facebook Sign in
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="" />
+        -->
+        <!-- Linkedin Sign in  -->
+
+
     </application>
+
 
 </manifest>

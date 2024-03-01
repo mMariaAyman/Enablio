@@ -6,75 +6,92 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.enablio.databinding.ActivitySignupDisabledBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class SignupDisabled : AppCompatActivity() {
-    private lateinit var fb:FirebaseAuth
-    private lateinit var binding:ActivitySignupDisabledBinding
+    private lateinit var binding: ActivitySignupDisabledBinding
+    private lateinit var rootFBRef: DatabaseReference
+    var childrenCount: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        //setContentView(R.layout.activity_main)
-        setTitle("SignUp")
-
         binding = ActivitySignupDisabledBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fb = FirebaseAuth.getInstance()
+        title = "SignUp"
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        rootFBRef = FirebaseDatabase.getInstance().reference.child("Disabled")
+        var flag = 5
         binding.dsignBtn.setOnClickListener {
             val name = binding.dnameTxt.text.toString()
-            val email = binding.demailTxt.text.toString()
-            val pass = binding.dpassTxt.text.toString()
-            val conPass = binding.dconPassTxt.text.toString()
-            if(email.isNotEmpty() && pass.isNotEmpty() &&name.isNotEmpty()
-                &&conPass.isNotEmpty()){
-                if(pass==conPass){
-                    fb.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            val intent = Intent(this, HomeDis::class.java)
-                            startActivity(intent)
-                        }
-                        else
-                        {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()
+            var email = binding.demailTxt.text.toString()
+            val password = binding.dpassTxt.text.toString()
+            val conPassword = binding.dconPassTxt.text.toString()
+            val disability = if(binding.blind.isChecked){
+                    "Blind"
+            } else if(binding.deaf.isChecked){
+                    "Deaf"
+            } else{
+                    "Dumb"
+            }
+            if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && conPassword.isNotEmpty()) {
+                rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        flag = 1
+                        if (dataSnapshot.exists()) {
+                            childrenCount = dataSnapshot.childrenCount
+                            dataSnapshot.children.forEach { snapshot ->
+                                val storedEmail = snapshot.child("email").getValue(String::class.java)
+                                if (storedEmail == email) {
+                                    flag = 0 // Set flag to 0 if a match is found
+                                    return@forEach
+                                }
+                            }
                         }
                     }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle the error if the operation is canceled or fails
+                    }
+                })
+                if (flag == 1) {
+                    if (password == conPassword) {
+                        val disabled = Disabled_data(name, email, password, disability, "", "")
+                        rootFBRef.child((childrenCount + 1).toString()).setValue(disabled)
+                            .addOnSuccessListener {
+                                Toast.makeText(
+                                    this,
+                                    "Disabled Added Successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(this, HomeDis::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
+                            .show()
+                        binding.dpassTxt.text.clear()
+                        binding.dconPassTxt.text.clear()
+                    }
+                } else if(flag==0){
+                    Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
+                    binding.demailTxt.text.clear()
+                    email = ""
                 }
-                else
-                {
-                    Toast.makeText(this, "Password doesn't matched!", Toast.LENGTH_LONG).show()
-                }
-            }
-            else
-            {
-                Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
+            }else {
+                Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.google.setOnClickListener{
+
+        }
+        binding.facebook.setOnClickListener {
+        }
+        binding.linkedin.setOnClickListener {
+        }
     }
-    /*  val btn: Button = findViewById(R.id.signBtn)
-      val name:EditText = findViewById(R.id.nameTxt)
-      val phone: EditText = findViewById(R.id.phoneTxt)
-      val email:EditText = findViewById(R.id.emailTxt)
-      val pass: EditText = findViewById(R.id.passTxt)
-      val conPass:EditText = findViewById(R.id.conPassTxt)
-
-      btn.setOnClickListener {
-          if(name.text.toString()==""||phone.text.toString()==""||email.text.toString()==""
-              ||pass.text.toString()==""||conPass.text.toString()==""){
-              Toast.makeText(this, "Fill all attributes", Toast.LENGTH_LONG).show()
-          }
-          else if(pass.text.toString()!=conPass.text.toString()){
-              Toast.makeText(this, "Password and Confirm isn't Same", Toast.LENGTH_LONG).show()
-          }
-          else{
-              Toast.makeText(this, "Registered Successfully..", Toast.LENGTH_LONG).show()
-              login()
-          }
-      }
-  }
-
-  private fun login() {
-      intent = Intent(this, Login::class.java)
-      startActivity(intent)
-  }*/
 }
