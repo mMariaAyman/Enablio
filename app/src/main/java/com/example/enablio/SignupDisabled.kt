@@ -142,6 +142,8 @@ class SignupDisabled : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if(it.isSuccessful){
+                binding.demailTxt.text.clear()
+                binding.dnameTxt.text.clear()
                 binding.demailTxt.text.append(account.email.toString())
                 binding.dnameTxt.text.append(account.displayName.toString())
             }

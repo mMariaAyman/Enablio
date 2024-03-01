@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.enablio.databinding.ActivityHomeDisBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeDis : AppCompatActivity() {
     private lateinit var binding:ActivityHomeDisBinding
+    private lateinit var auth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeDisBinding.inflate(layoutInflater)

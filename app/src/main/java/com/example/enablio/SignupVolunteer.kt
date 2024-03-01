@@ -1,6 +1,7 @@
 package com.example.enablio
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +36,6 @@ class SignupVolunteer : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         rootFBRef = FirebaseDatabase.getInstance().reference.child("Volunteer")
         var flag = 5
-
         binding.signBtn.setOnClickListener {
             val name = binding.nameTxt.text.toString()
             var email = binding.emailTxt.text.toString()
@@ -124,6 +124,7 @@ class SignupVolunteer : AppCompatActivity() {
     private fun handelResults(task: Task<GoogleSignInAccount>){
         if(task.isSuccessful){
             val account: GoogleSignInAccount? = task.result
+
             if(account!=null){
                 updateUI(account)
             }
@@ -137,6 +138,8 @@ class SignupVolunteer : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener {
             if(it.isSuccessful){
+                binding.emailTxt.text.clear()
+                binding.nameTxt.text.clear()
                 binding.emailTxt.text.append(account.email.toString())
                 binding.nameTxt.text.append(account.displayName.toString())
             }

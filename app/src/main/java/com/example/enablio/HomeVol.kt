@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.enablio.databinding.ActivityHomeVolBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeVol : AppCompatActivity() {
     private lateinit var binding: ActivityHomeVolBinding
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeVolBinding.inflate(layoutInflater)
