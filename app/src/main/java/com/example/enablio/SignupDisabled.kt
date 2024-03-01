@@ -37,27 +37,27 @@ class SignupDisabled : AppCompatActivity() {
                     "Dumb"
             }
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && conPassword.isNotEmpty()) {
-                rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        flag = 1
-                        if (dataSnapshot.exists()) {
-                            childrenCount = dataSnapshot.childrenCount
-                            dataSnapshot.children.forEach { snapshot ->
-                                val storedEmail = snapshot.child("email").getValue(String::class.java)
-                                if (storedEmail == email) {
-                                    flag = 0 // Set flag to 0 if a match is found
-                                    return@forEach
+                if (password == conPassword) {
+                    if (password.length >= 8) {
+                        rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                flag = 1
+                                if (dataSnapshot.exists()) {
+                                    childrenCount = dataSnapshot.childrenCount
+                                    dataSnapshot.children.forEach { snapshot ->
+                                        val storedEmail = snapshot.child("email").getValue(String::class.java)
+                                        if (storedEmail == email) {
+                                            flag = 0 // Set flag to 0 if a match is found
+                                            return@forEach
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        // Handle the error if the operation is canceled or fails
-                    }
-                })
-                if (flag == 1) {
-                    if (password == conPassword) {
-                        if (password.length >= 8) {
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                // Handle the error if the operation is canceled or fails
+                            }
+                        })
+                        if (flag == 1) {
                             val disabled = Disabled_data(name, email, password, disability, "", "")
                             rootFBRef.child((childrenCount + 1).toString()).setValue(disabled)
                                 .addOnSuccessListener {
@@ -72,20 +72,23 @@ class SignupDisabled : AppCompatActivity() {
                                 .addOnFailureListener {
                                     Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
                                 }
-                        }else{
-                            Toast.makeText(this, "Password should at least contain 8 characters", Toast.LENGTH_SHORT).show()
+                        }else if(flag==0){
+                            Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
+                            binding.demailTxt.text.clear()
+                            email = ""
+
                         }
-                    }else {
-                        Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
-                            .show()
-                        binding.dpassTxt.text.clear()
-                        binding.dconPassTxt.text.clear()
+
+                    }else{
+                        Toast.makeText(this, "Password should at least contain 8 characters", Toast.LENGTH_SHORT).show()
                     }
-                } else if(flag==0){
-                    Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
-                    binding.demailTxt.text.clear()
-                    email = ""
+                }else{
+                    Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
+                        .show()
+                    binding.dpassTxt.text.clear()
+                    binding.dconPassTxt.text.clear()
                 }
+
             }else {
                 Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             }
