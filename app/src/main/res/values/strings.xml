@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Enablio</string>
+    <string name="default_web_client_id">810652911335-sghbh0h1eb91rpdama7sto6ihv8o8li3.apps.googleusercontent.com</string>
+
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
