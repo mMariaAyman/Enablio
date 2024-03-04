@@ -9,7 +9,6 @@
     android:layout_marginTop="30dp"
     android:layout_marginBottom="30dp"
     android:background="@drawable/home"
-    android:layout_gravity="center"
     >
 
     <ImageView
@@ -22,13 +21,12 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="35dp"
     android:layout_marginEnd="35dp"
     android:orientation="vertical"
     android:background="@drawable/form"
-    android:layout_gravity="center"
-    android:gravity="center">
+    >
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -54,7 +52,7 @@
             <EditText
                 android:id="@+id/nameTxt"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:autofillHints="name"
@@ -90,7 +88,7 @@
             <EditText
                 android:id="@+id/emailTxt"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:autofillHints="emailAddress"
@@ -125,7 +123,7 @@
             <EditText
                 android:id="@+id/subjectTxt"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/box"
@@ -154,24 +152,21 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <EditText
                 android:id="@+id/messageTxt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:padding="10dp"
                 android:background="@drawable/box"
                 android:gravity="top"
                 android:layout_gravity="start"
                 android:inputType="textMultiLine"
-                android:lines="4"
-                android:overScrollMode="always"
+                android:lines="3"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:scrollbarStyle="insideInset"
-                android:scrollbars="vertical"
-                android:scrollHorizontally="false"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
