@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.enablio.databinding.ActivityHomeDisBinding
+import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeDis : AppCompatActivity() {
@@ -25,21 +26,22 @@ class HomeDis : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.dropdown_menu_Profile -> {
-                val intent = Intent(this, Profile::class.java)
+                val intent = Intent(this, ProfileDis::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.dropdown_menu_Suggestions -> {
-                val intent = Intent(this, Suggestions::class.java)
+                val intent = Intent(this, SuggestionsDis::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.dropdown_menu_Contactus -> {
-                val intent = Intent(this, Contactus::class.java)
+                val intent = Intent(this, ContactusDis::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.dropdown_menu_Logout -> {
+                LoginManager.getInstance().logOut()
                 val intent = Intent(this, LoginDis::class.java)
                 startActivity(intent)
                 return true

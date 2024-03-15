@@ -5,19 +5,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.example.enablio.databinding.ActivityHomeVolBinding
+import com.example.enablio.databinding.ActivityProfileBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 
-class HomeVol : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeVolBinding
+class ProfileDis : AppCompatActivity() {
+    private lateinit var binding:ActivityProfileBinding
     private lateinit var auth: FirebaseAuth
-
+    private lateinit var rootFBRef: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeVolBinding.inflate(layoutInflater)
+        binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setTitle("Home")
+        setTitle("My Profile")
+        auth = FirebaseAuth.getInstance()
+        binding.editNameTxt.text.append(auth.currentUser?.displayName.toString())
+        binding.userName.text = auth.currentUser?.displayName.toString()
+        binding.editEmailTxt.text.append(auth.currentUser?.email.toString())
+
+        binding.saveProfile.setOnClickListener {
+            binding.editNameTxt.text.toString()
+        }
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -27,7 +36,7 @@ class HomeVol : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.dropdown_menu_Profile -> {
-                val intent = Intent(this, ProfileVol::class.java)
+                val intent = Intent(this, ProfileDis::class.java)
                 startActivity(intent)
                 return true
             }
@@ -43,11 +52,12 @@ class HomeVol : AppCompatActivity() {
             }
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
-                val intent = Intent(this, LoginVol::class.java)
+                val intent = Intent(this, LoginDis::class.java)
                 startActivity(intent)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
 }

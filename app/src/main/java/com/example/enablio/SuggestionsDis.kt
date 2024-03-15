@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.facebook.login.LoginManager
 
-class Suggestions : AppCompatActivity() {
+class SuggestionsDis : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_suggestions)
@@ -19,22 +20,23 @@ class Suggestions : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.dropdown_menu_Profile -> {
-                val intent = Intent(this, Profile::class.java)
+                val intent = Intent(this, ProfileDis::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.dropdown_menu_Suggestions -> {
-                val intent = Intent(this, Suggestions::class.java)
+                val intent = Intent(this, SuggestionsDis::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.dropdown_menu_Contactus -> {
-                val intent = Intent(this, Contactus::class.java)
+                val intent = Intent(this, ContactusDis::class.java)
                 startActivity(intent)
                 return true
             }
             R.id.dropdown_menu_Logout -> {
-                val intent = Intent(this, MainActivity::class.java)
+                LoginManager.getInstance().logOut()
+                val intent = Intent(this, LoginDis::class.java)
                 startActivity(intent)
                 return true
             }

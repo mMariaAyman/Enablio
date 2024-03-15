@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile"
     android:background="@drawable/home"
     android:orientation="vertical"
     android:layout_marginBottom="30dp"
@@ -52,19 +51,21 @@
         android:textSize="20sp"
         android:drawableStart="@drawable/personblue"
         android:hint="Name"/>
+
     <EditText
         android:id="@+id/edit_emailTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
-        android:textColorHint="@color/gray"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:layout_marginEnd="10dp"
         android:drawableStart="@drawable/emailblue"
-        android:hint="Email"/>
+        android:enabled="false"
+        android:hint="Email"
+        android:padding="15dp"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
+        android:textSize="20sp" />
     <EditText
         android:id="@+id/gender"
         android:layout_width="match_parent"

@@ -12,4 +12,10 @@
     <string name="profile">My Profile</string>
     <string name="suggestions">Suggestions &amp; Complains</string>
 
+    <string name="facebook_app_id">7074327812666187</string>
+    <string name="fb_login_protocol_scheme"></string>
+    <string name="facebook_client_token">1d52643bf16b891e870738afcea2911f</string>
+
+
+
 </resources>

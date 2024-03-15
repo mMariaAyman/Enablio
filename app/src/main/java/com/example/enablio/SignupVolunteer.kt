@@ -1,19 +1,28 @@
 package com.example.enablio
 
 import android.app.Activity
-import android.app.ProgressDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.example.enablio.databinding.ActivitySignupVolunteerBinding
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.FacebookSdk
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
@@ -21,12 +30,15 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.util.Arrays
+
 
 class SignupVolunteer : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
     private lateinit var googleSignClient: GoogleSignInClient
     private lateinit var binding: ActivitySignupVolunteerBinding
     private lateinit var rootFBRef: DatabaseReference
+    private lateinit var callbackManager: CallbackManager
     var childrenCount: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +46,38 @@ class SignupVolunteer : AppCompatActivity() {
         setContentView(binding.root)
         title = "SignUp"
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        callbackManager = CallbackManager.Factory.create()
+
+
+        LoginManager.getInstance().registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    handleFacebookAccessToken(result.accessToken)
+                }
+
+                override fun onCancel() {
+                    Log.d(TAG, "facebook:onCancel")
+                }
+
+                override fun onError(error: FacebookException) {
+                    Log.d(TAG, "facebook:onError", error)
+                }
+            },
+        )
+        binding.facebook.setOnClickListener{
+            val accessToken = AccessToken.getCurrentAccessToken()
+            if(accessToken!=null && accessToken.isExpired==false) {
+                val intent = Intent(this, HomeVol::class.java)
+                startActivity(intent)
+            }else
+                LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"))
+        }
+
+
+
+
+
         rootFBRef = FirebaseDatabase.getInstance().reference.child("Volunteer")
         var flag = 5
         binding.signBtn.setOnClickListener {
@@ -110,11 +154,45 @@ class SignupVolunteer : AppCompatActivity() {
             launcher.launch(signInIntent)
         }
 
-        binding.facebook.setOnClickListener {
-        }
         binding.linkedin.setOnClickListener {
         }
     }
+
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        Log.d(TAG, "handleFacebookAccessToken:$token")
+
+        val credential = FacebookAuthProvider.getCredential(token.token)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val user = auth.currentUser
+                    Toast.makeText(this, user?.email.toString(), Toast.LENGTH_LONG).show()
+                    binding.emailTxt.text.clear()
+                    binding.nameTxt.text.clear()
+                    binding.emailTxt.text.append(user?.email.toString())
+                    binding.nameTxt.text.append(user?.displayName.toString())
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed.",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+
+
+
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result -> if(result.resultCode== Activity.RESULT_OK){
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
