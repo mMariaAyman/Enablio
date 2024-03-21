@@ -7,11 +7,11 @@ class Volunteer_data {
     var name:String =""
     var email: String =""
     var password: String=""
-    var signLanguage: Boolean = false
+    var signLanguage: String = ""
     var gender: String = ""
     var photo = ""
 
-    constructor(name:String, email:String, password:String, signLanguage: Boolean, gender:String, photo:String){
+    constructor(name:String, email:String, password:String, signLanguage: String, gender:String, photo:String){
         this.name = name
         this.email = email
         this.password = password

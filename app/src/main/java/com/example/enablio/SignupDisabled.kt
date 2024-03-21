@@ -79,74 +79,58 @@ class SignupDisabled : AppCompatActivity() {
         }
 
 
-        var flag = 5
+
+        auth = FirebaseAuth.getInstance()
         binding.dsignBtn.setOnClickListener {
             val name = binding.dnameTxt.text.toString()
-            var email = binding.demailTxt.text.toString()
-            val password = binding.dpassTxt.text.toString()
-            val conPassword = binding.dconPassTxt.text.toString()
-            val disability = if(binding.blind.isChecked){
-                    "Blind"
-            } else if(binding.deaf.isChecked){
-                    "Deaf"
-            } else{
-                    "Dumb"
-            }
-            if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && conPassword.isNotEmpty()) {
-                if (password == conPassword) {
-                    if (password.length >= 8) {
-                        rootFBRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                flag = 1
-                                if (dataSnapshot.exists()) {
-                                    childrenCount = dataSnapshot.childrenCount
-                                    dataSnapshot.children.forEach { snapshot ->
-                                        val storedEmail = snapshot.child("email").getValue(String::class.java)
-                                        if (storedEmail == email) {
-                                            flag = 0 // Set flag to 0 if a match is found
-                                            return@forEach
-                                        }
-                                    }
-                                }
-                            }
-                            override fun onCancelled(databaseError: DatabaseError) {
-                                // Handle the error if the operation is canceled or fails
-                            }
-                        })
-                        if (flag == 1) {
-                            val disabled = Disabled_data(name, email, password.hashCode().toString(), disability, "", "")
-                            rootFBRef.child((childrenCount + 1).toString()).setValue(disabled)
-                                .addOnSuccessListener {
-                                    Toast.makeText(
-                                        this,
-                                        "Disabled Added Successfully",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val intent = Intent(this, HomeDis::class.java)
-                                    startActivity(intent)
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
-                                }
-                        }
-                        else if(flag==0){
-                            Toast.makeText(this, "This Email is registered already", Toast.LENGTH_SHORT).show()
-                            binding.demailTxt.text.clear()
-                            email = ""
-                        }
-                    }else{
-                        Toast.makeText(this, "Password should at least contain 8 characters", Toast.LENGTH_SHORT).show()
-                    }
-                }else{
-                    Toast.makeText(this, "Passwords should be the same", Toast.LENGTH_SHORT)
-                        .show()
-                    binding.dpassTxt.text.clear()
-                    binding.dconPassTxt.text.clear()
+            val email = binding.demailTxt.text.toString()
+            val pass = binding.dpassTxt.text.toString()
+            val conPass = binding.dconPassTxt.text.toString()
+            val disability =
+                if (binding.deaf.isChecked) {
+                    binding.deaf.text.toString()
                 }
-
-            }else {
-                Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+                else if(binding.dumb.isChecked){
+                    binding.dumb.text.toString()
+                }
+                else{
+                    binding.blind.text.toString()
+                }
+            if(name.isEmpty()||email.isEmpty()||pass.isEmpty()||conPass.isEmpty()){
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show()
             }
+            else if(pass!=conPass){
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show()
+            }else if(pass.length<8){
+                Toast.makeText(this, "Passwords should be 8 characters at least!", Toast.LENGTH_SHORT).show()
+            }
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                Toast.makeText(this, "Invalid Email format!", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val user = Disabled_data(name, email, pass, disability, "", "")
+                        rootFBRef.child(it.result.user?.uid.toString()).setValue(user)
+                            .addOnSuccessListener {
+                                Toast.makeText(
+                                    this,
+                                    "Disabled Added Successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(this, HomeDis::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Adding Failed", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    else{
+                        Toast.makeText(this, "This email is already signed up...Please login instead!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
         }
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

@@ -15,20 +15,36 @@
         <activity
             android:name=".NewPassDis"
             android:exported="false" />
+
         <activity
             android:name=".VerificationCodeDis"
+            android:exported="false" />
+        <activity
+            android:name=".VerificationCodeVol"
             android:exported="false" />
         <activity
             android:name=".ForgetPassDis"
             android:exported="false" />
         <activity
+            android:name=".ForgetPassVol"
+            android:exported="false" />
+        <activity
             android:name=".SuggestionsDis"
+            android:exported="false" />
+        <activity
+            android:name=".SuggestionsVol"
             android:exported="false" />
         <activity
             android:name=".ProfileDis"
             android:exported="false" />
         <activity
+            android:name=".ProfileVol"
+            android:exported="false" />
+        <activity
             android:name=".ContactusDis"
+            android:exported="false" />
+        <activity
+            android:name=".ContactusVol"
             android:exported="false" />
         <activity
             android:name=".HomeVol"

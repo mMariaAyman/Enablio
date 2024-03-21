@@ -10,7 +10,6 @@
     android:layout_marginBottom="30dp"
     android:background="@drawable/home"
     >
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="130dp"

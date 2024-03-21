@@ -9,8 +9,11 @@ import android.widget.Toast
 import com.example.enablio.databinding.ActivityProfileBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.values
 
 class ProfileVol : AppCompatActivity() {
@@ -23,21 +26,44 @@ class ProfileVol : AppCompatActivity() {
         setContentView(binding.root)
         setTitle("My Profile")
         auth = FirebaseAuth.getInstance()
+        rootFBRef = FirebaseDatabase.getInstance().getReference("Volunteer")
         binding.editNameTxt.text.append(auth.currentUser?.displayName.toString())
         binding.userName.text = auth.currentUser?.displayName.toString()
         binding.editEmailTxt.text.append(auth.currentUser?.email.toString())
 
         binding.saveProfile.setOnClickListener {
-            rootFBRef = FirebaseDatabase.getInstance().getReference("Volunteer")
             val map = mapOf<String,String>(
                 "name" to binding.editNameTxt.text.toString(),
-                "gender" to binding.gender.text.toString()
+                "gender" to binding.gender.text.toString(),
+
             )
-            rootFBRef.child("12").updateChildren(map).addOnSuccessListener {
+            rootFBRef.child("2").updateChildren(map).addOnSuccessListener {
                 Toast.makeText(this,"Updated Successfully!", Toast.LENGTH_SHORT).show()
-                binding.editNameTxt.text.append(auth.currentUser?.displayName.toString())
-                binding.userName.text = auth.currentUser?.displayName.toString()
-                binding.gender.text.append(rootFBRef.child("12").toString())
+                val genderRef = rootFBRef.child("2/gender")
+                val nameRef = rootFBRef.child("2/name")
+                nameRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val nameValue = dataSnapshot.getValue(String::class.java)
+                        binding.userName.setText(nameValue)
+                        binding.editNameTxt.setText(nameValue)
+
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle database error
+                    }
+                })
+                genderRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val genderValue = dataSnapshot.getValue(String::class.java)
+                        binding.gender.setText(genderValue)
+
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle database error
+                    }
+                })
             }
         }
 
