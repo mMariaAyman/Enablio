@@ -17,6 +17,7 @@
         android:layout_marginTop="80dp"
         >
         <ImageView
+            android:id="@+id/userImage"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:src="@mipmap/profile"/>

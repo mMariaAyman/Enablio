@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.accessibility.AccessibilityViewCommand.ScrollToPositionArguments
 import com.example.enablio.databinding.ActivityProfileBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
@@ -15,11 +16,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class ProfileDis : AppCompatActivity() {
     private lateinit var binding:ActivityProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var rootFBRef: DatabaseReference
+    private lateinit var sDB: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -27,6 +31,7 @@ class ProfileDis : AppCompatActivity() {
         setTitle("My Profile")
         auth = FirebaseAuth.getInstance()
         rootFBRef = FirebaseDatabase.getInstance().getReference("Disabled")
+        sDB = FirebaseStorage.getInstance().getReference("photos")
         rootFBRef.child(auth.currentUser?.uid.toString()).child("name").addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -120,9 +125,40 @@ class ProfileDis : AppCompatActivity() {
             dialog.show()
 
         }
+        binding.uploadPhoto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, 10)
+        }
 
 
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 10 && resultCode == RESULT_OK) {
+            val uri = data?.data
+            if (uri != null) {
+                val storageRef = FirebaseStorage.getInstance().getReference("photos")
+                val photoRef = storageRef.child("${auth.currentUser?.uid}.jpg")
+                photoRef.downloadUrl.addOnSuccessListener {
+                    binding.userImage.setImageURI(it.toString())
+                }
+                photoRef.putFile(uri)
+                    .addOnSuccessListener { taskSnapshot ->
+                        // Photo uploaded successfully
+                        // You can retrieve the download URL of the uploaded photo using taskSnapshot.metadata.downloadUrl
+                        Toast.makeText(this, "Uploaded Successfully!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { exception ->
+                        // Handle any errors that occurred during the upload process
+                        Toast.makeText(this, "Failed to Upload", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true

@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        val intent = Intent(this, ProfileVol::class.java)
+        val intent = Intent(this, ProfileDis::class.java)
          startActivity(intent)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
