@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -22,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -30,14 +32,19 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.File
 import java.util.Arrays
 
 
 class SignupVolunteer : AppCompatActivity() {
     private lateinit var auth:FirebaseAuth
+    private lateinit var sDb:StorageReference
     private lateinit var googleSignClient: GoogleSignInClient
     private lateinit var binding: ActivitySignupVolunteerBinding
     private lateinit var rootFBRef: DatabaseReference
+
     private lateinit var callbackManager: CallbackManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +85,7 @@ class SignupVolunteer : AppCompatActivity() {
 
 
         rootFBRef = FirebaseDatabase.getInstance().reference.child("Volunteer")
-
+        sDb = FirebaseStorage.getInstance().reference.child("photos")
         auth = FirebaseAuth.getInstance()
         binding.signBtn.setOnClickListener {
             val name = binding.nameTxt.text.toString()
@@ -107,13 +114,16 @@ class SignupVolunteer : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if(it.isSuccessful){
                         val user = Volunteer_data(name, email, pass, signLanguage, "", "")
-                        rootFBRef.child(it.result.user?.uid.toString()).setValue(user)
+                        val userId = it.result.user?.uid.toString()
+                        rootFBRef.child(userId).setValue(user)
                             .addOnSuccessListener {
                                 Toast.makeText(
                                     this,
                                     "Volunteer Added Successfully",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                val file = Uri.fromFile(File("/drawable/start"))
+                                sDb.child(userId).putFile(file)
                                 val intent = Intent(this, HomeVol::class.java)
                                 startActivity(intent)
                             }
