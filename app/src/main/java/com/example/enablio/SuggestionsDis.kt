@@ -12,6 +12,7 @@ class SuggestionsDis : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_suggestions)
         setTitle("Suggestion & Complains")
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
