@@ -110,7 +110,7 @@ class SignupDisabled : AppCompatActivity() {
             else{
                 auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if(it.isSuccessful){
-                        val user = Disabled_data(name, email, pass, disability, "", "")
+                        val user = Disabled_data(name, email, pass, disability, "", "", 0)
                         rootFBRef.child(it.result.user?.uid.toString()).setValue(user)
                             .addOnSuccessListener {
                                 Toast.makeText(

@@ -10,13 +10,14 @@ class Volunteer_data {
     var signLanguage: String = ""
     var gender: String = ""
     var photo = ""
-
-    constructor(name:String, email:String, password:String, signLanguage: String, gender:String, photo:String){
+    var numOfCalls = 0
+    constructor(name:String, email:String, password:String, signLanguage: String, gender:String, photo:String, numOfCalls:Int){
         this.name = name
         this.email = email
         this.password = password
         this.signLanguage = signLanguage
         this.gender = gender
         this.photo = photo
+        this.numOfCalls = numOfCalls
     }
 }

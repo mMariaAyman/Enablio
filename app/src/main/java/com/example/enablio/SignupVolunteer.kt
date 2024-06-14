@@ -113,7 +113,7 @@ class SignupVolunteer : AppCompatActivity() {
             else{
                 auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if(it.isSuccessful){
-                        val user = Volunteer_data(name, email, pass, signLanguage, "", "")
+                        val user = Volunteer_data(name, email, pass, signLanguage, "", "", 0)
                         val userId = it.result.user?.uid.toString()
                         rootFBRef.child(userId).setValue(user)
                             .addOnSuccessListener {
