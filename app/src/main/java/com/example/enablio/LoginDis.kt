@@ -10,18 +10,14 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginDis : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var fb:FirebaseAuth
+    private lateinit var auth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle("Login")
-
-        binding.loginBtn.setOnClickListener {
-           val intent = Intent(this, HomeDis::class.java)
-            startActivity(intent)
-        }
+        auth = FirebaseAuth.getInstance()
         binding.signRedirectText.setOnClickListener {
            val intent = Intent(this, SignupDisabled::class.java)
             startActivity(intent)
@@ -30,20 +26,18 @@ class LoginDis : AppCompatActivity() {
             val intent = Intent(this,ForgetPassDis::class.java)
             startActivity(intent)
         }
-       /* binding.loginBtn.setOnClickListener {
+       binding.loginBtn.setOnClickListener {
             val email = binding.emailTxt.text.toString()
             val pass = binding.passTxt.text.toString()
             if(email.isNotEmpty() && pass.isNotEmpty()){
-                fb.signInWithEmailLink(email,pass).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            val intent = Intent(this, HomeDis::class.java)
-                            startActivity(intent)
-                        }
-                        else
-                        {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()
-                        }
-                    }
+                auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener {
+                    val intent = Intent(this, HomeDis::class.java)
+                    startActivity(intent)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "User not Found!", Toast.LENGTH_LONG).show()
+
+                }
+
             }
             else{
                 Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
@@ -57,6 +51,6 @@ class LoginDis : AppCompatActivity() {
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        */
+
     }
 }

@@ -5,13 +5,49 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.example.enablio.databinding.ActivityLoginBinding
+import com.example.enablio.databinding.ActivitySuggestionsBinding
 import com.facebook.login.LoginManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SuggestionsDis : AppCompatActivity() {
+    private lateinit var binding: ActivitySuggestionsBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var myRef: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suggestions)
         setTitle("Suggestion & Complains")
+        binding = ActivitySuggestionsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        myRef = FirebaseDatabase.getInstance().reference.child("Suggestion")
+        auth = FirebaseAuth.getInstance()
+        binding.send.setOnClickListener{
+            val subtxt = binding.subjectTxt
+            val sub = subtxt.text.toString()
+            val msgtxt = binding.messageTxt
+            val msg = msgtxt.text.toString()
+            if (msg.isNotEmpty()){
+                val sug = Suggestion_data(sub, msg)
+                myRef.child(auth.currentUser?.uid.toString()).push().setValue(sug)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Added Successfully!", Toast.LENGTH_SHORT).show()
+                        subtxt.text.clear()
+                        msgtxt.text.clear()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Added Failed!", Toast.LENGTH_SHORT).show()
+
+                    }
+
+            }else{
+                Toast.makeText(this, "All fields are requierd",Toast.LENGTH_LONG).show()
+            }
+        }
+
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

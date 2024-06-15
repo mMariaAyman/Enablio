@@ -10,20 +10,16 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginVol : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var fb: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-
+        auth = FirebaseAuth.getInstance()
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         setContentView(binding.root)
         setTitle("Login")
-        binding.loginBtn.setOnClickListener {
-            val intent = Intent(this, HomeVol::class.java)
-            startActivity(intent)
-        }
         binding.signRedirectText.setOnClickListener {
             val intent = Intent(this, SignupVolunteer::class.java)
             startActivity(intent)
@@ -32,20 +28,18 @@ class LoginVol : AppCompatActivity() {
             val intent = Intent(this,ForgetPassVol::class.java)
             startActivity(intent)
         }
-        /* binding.loginBtn.setOnClickListener {
+        binding.loginBtn.setOnClickListener {
             val email = binding.emailTxt.text.toString()
             val pass = binding.passTxt.text.toString()
             if(email.isNotEmpty() && pass.isNotEmpty()){
-                fb.signInWithEmailLink(email,pass).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            val intent = Intent(this, HomeDis::class.java)
-                            startActivity(intent)
-                        }
-                        else
-                        {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()
-                        }
-                    }
+                auth.signInWithEmailAndPassword(email, pass).addOnSuccessListener {
+                    val intent = Intent(this, HomeVol::class.java)
+                    startActivity(intent)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "User not Found!", Toast.LENGTH_LONG).show()
+
+                }
+
             }
             else{
                 Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
@@ -58,6 +52,6 @@ class LoginVol : AppCompatActivity() {
         binding.forgetPass.setOnClickListener{
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        }*/
+        }
     }
 }
