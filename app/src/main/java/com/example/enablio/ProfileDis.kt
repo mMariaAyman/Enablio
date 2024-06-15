@@ -233,6 +233,7 @@ class ProfileDis : AppCompatActivity() {
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
                 val intent = Intent(this, MainActivity::class.java)
+                auth.signOut()
                 startActivity(intent)
                 return true
             }

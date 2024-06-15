@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.facebook.login.LoginManager
+import com.google.firebase.auth.FirebaseAuth
 
 class ContactusDis : AppCompatActivity() {
+    private lateinit var auth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contactus)
@@ -37,6 +39,8 @@ class ContactusDis : AppCompatActivity() {
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
                 val intent = Intent(this, MainActivity::class.java)
+                auth.signOut()
+
                 startActivity(intent)
                 return true
             }
