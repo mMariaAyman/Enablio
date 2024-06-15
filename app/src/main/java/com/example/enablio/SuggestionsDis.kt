@@ -73,7 +73,7 @@ class SuggestionsDis : AppCompatActivity() {
             }
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
-                val intent = Intent(this, LoginDis::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 return true
             }

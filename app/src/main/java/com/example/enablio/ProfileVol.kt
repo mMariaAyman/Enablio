@@ -1,6 +1,7 @@
 package com.example.enablio
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -16,18 +17,29 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.values
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
+import java.util.UUID
 
 class ProfileVol : AppCompatActivity() {
     private lateinit var binding:ActivityProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var rootFBRef: DatabaseReference
+    private val PICK_IMAGE_REQUEST = 1
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle("My Profile")
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
         rootFBRef = FirebaseDatabase.getInstance().getReference("Volunteer")
+
+
         rootFBRef.child(auth.currentUser?.uid.toString()).child("name").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
@@ -50,7 +62,11 @@ class ProfileVol : AppCompatActivity() {
             }
         })
         binding.editEmailTxt.text.append(auth.currentUser?.email.toString())
-
+        //View User Image
+        val ref = storageReference.child("photos/${auth.currentUser?.uid.toString()}.png")
+        ref.downloadUrl.addOnSuccessListener {
+            Picasso.get().load(it).into(binding.userImage)
+        }
         binding.saveProfile.setOnClickListener {
             val map = mapOf<String,String>(
                 "name" to binding.editNameTxt.text.toString(),
@@ -119,7 +135,46 @@ class ProfileVol : AppCompatActivity() {
 
         }
 
+        binding.uploadPhoto.setOnClickListener {
+            selectImage()
+        }
+
     }
+    private fun selectImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            val filePath = data.data
+            uploadImage(filePath)
+        }
+    }
+
+    private fun uploadImage(filePath: Uri?) {
+        if (filePath != null) {
+            val ref = storageReference.child("photos/${auth.currentUser?.uid.toString()}.png")
+            ref.putFile(filePath)
+                .addOnSuccessListener {
+                    val map = mapOf<String, String>(
+                        "photo" to "https://storage.cloud.google.com/enablio2023.appspot.com" + ref.path
+                    )
+                    rootFBRef.child(auth.currentUser?.uid.toString()).updateChildren(map)
+                    ref.downloadUrl.addOnSuccessListener {
+                        Toast.makeText(this, "Uploaded", Toast.LENGTH_SHORT).show()
+                        Picasso.get().load(it).into(binding.userImage)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed " + e.message, Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
@@ -143,7 +198,7 @@ class ProfileVol : AppCompatActivity() {
             }
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
-                val intent = Intent(this, LoginVol::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 return true
             }

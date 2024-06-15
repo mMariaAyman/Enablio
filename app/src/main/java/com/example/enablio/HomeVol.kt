@@ -43,7 +43,7 @@ class HomeVol : AppCompatActivity() {
             }
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
-                val intent = Intent(this, LoginVol::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 return true
             }

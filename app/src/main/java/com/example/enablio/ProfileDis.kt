@@ -28,17 +28,24 @@ class ProfileDis : AppCompatActivity() {
     private lateinit var binding:ActivityProfileBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var rootFBRef: DatabaseReference
-    private lateinit var sDB: StorageReference
-    private var uri:Uri?= null
+    private val PICK_IMAGE_REQUEST = 1
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle("My Profile")
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage.reference
         rootFBRef = FirebaseDatabase.getInstance().getReference("Disabled")
-        sDB = FirebaseStorage.getInstance().reference.child("photos/")
 
+        //View User Image
+        val ref = storageReference.child("photos/${auth.currentUser?.uid.toString()}.png")
+        ref.downloadUrl.addOnSuccessListener {
+            Picasso.get().load(it).into(binding.userImage)
+        }
 
         rootFBRef.child(auth.currentUser?.uid.toString()).child("name")
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -64,7 +71,6 @@ class ProfileDis : AppCompatActivity() {
             }
         })
         binding.editEmailTxt.text.append(auth.currentUser?.email.toString())
-
         binding.deleteProfile.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Confirm")
@@ -97,33 +103,10 @@ class ProfileDis : AppCompatActivity() {
             dialog.show()
 
         }
-        //Upload User Photo
-        val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
-            binding.userImage.setImageURI(it)
-            uri = it
-
-        }
-        binding.uploadPhoto.setOnClickListener {
-            pickImage.launch("image/*")
-
-        }
-
-
         binding.saveProfile.setOnClickListener {
-            var imageurl = ""
-            if(uri != null){
-                sDB.child(auth.currentUser?.uid.toString()+".jpg").putFile(uri!!)
-                    .addOnSuccessListener { task ->
-                        task.metadata!!.reference!!.downloadUrl.addOnSuccessListener {url->
-                            imageurl = url!!.toString()
-                        }
-
-                    }
-            }
             val map = mapOf<String,String>(
                 "name" to binding.editNameTxt.text.toString(),
                 "gender" to binding.gender.text.toString(),
-                "photo" to "https://firebasestorage.googleapis.com/v0/b/enablio2023.appspot.com/o/photos%2FGVbKYdkLoddBXZp9Ii9THh8FdDi1.jpg?alt=media&token=e155a852-639f-4483-bb27-0873b8ef41be"
                 )
             rootFBRef.child(auth.currentUser?.uid.toString()).updateChildren(map).addOnSuccessListener {
                 Toast.makeText(this,"Updated Successfully!", Toast.LENGTH_SHORT).show()
@@ -155,8 +138,45 @@ class ProfileDis : AppCompatActivity() {
             }
 
         }
+        binding.uploadPhoto.setOnClickListener {
+            selectImage()
+        }
 
 
+    }
+    private fun selectImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            val filePath = data.data
+            uploadImage(filePath)
+        }
+    }
+
+    private fun uploadImage(filePath: Uri?) {
+        if (filePath != null) {
+            val ref = storageReference.child("photos/${auth.currentUser?.uid.toString()}.png")
+            ref.putFile(filePath)
+                .addOnSuccessListener {
+                    val map = mapOf<String, String>(
+                        "photo" to "https://storage.cloud.google.com/enablio2023.appspot.com" + ref.path
+                    )
+                    rootFBRef.child(auth.currentUser?.uid.toString()).updateChildren(map)
+                    ref.downloadUrl.addOnSuccessListener {
+                        Toast.makeText(this, "Uploaded", Toast.LENGTH_SHORT).show()
+                        Picasso.get().load(it).into(binding.userImage)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed " + e.message, Toast.LENGTH_SHORT).show()
+                }
+        }
     }
     /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -212,7 +232,7 @@ class ProfileDis : AppCompatActivity() {
             }
             R.id.dropdown_menu_Logout -> {
                 LoginManager.getInstance().logOut()
-                val intent = Intent(this, LoginDis::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 return true
             }
