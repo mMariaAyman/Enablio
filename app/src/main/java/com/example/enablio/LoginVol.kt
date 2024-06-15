@@ -50,7 +50,7 @@ class LoginVol : AppCompatActivity() {
             startActivity(intent)
         }
         binding.forgetPass.setOnClickListener{
-            intent = Intent(this, MainActivity::class.java)
+            intent = Intent(this, ForgetPassVol::class.java)
             startActivity(intent)
         }
     }

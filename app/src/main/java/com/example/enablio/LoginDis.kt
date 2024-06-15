@@ -48,7 +48,7 @@ class LoginDis : AppCompatActivity() {
             startActivity(intent)
         }
         binding.forgetPass.setOnClickListener{
-            intent = Intent(this, MainActivity::class.java)
+            intent = Intent(this, ForgetPassDis::class.java)
             startActivity(intent)
         }
 
