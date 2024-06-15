@@ -44,7 +44,6 @@ class HomeDis : AppCompatActivity() {
                 LoginManager.getInstance().logOut()
                 val intent = Intent(this, MainActivity::class.java)
                 auth.signOut()
-
                 startActivity(intent)
                 return true
             }
