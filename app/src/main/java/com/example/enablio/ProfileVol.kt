@@ -67,14 +67,15 @@ class ProfileVol : AppCompatActivity() {
         ref.downloadUrl.addOnSuccessListener {
             Picasso.get().load(it).into(binding.userImage)
         }
-        var gender = ""
-        if(binding.gender.text.toString()=="F" || binding.gender.text.toString()=="Female" || binding.gender.text.toString()=="female"){
-            gender="Female"
-        }
-        else if(binding.gender.text.toString()=="M" || binding.gender.text.toString()=="Male" || binding.gender.text.toString()=="male"){
-            gender = "Male"
-        }
+
         binding.saveProfile.setOnClickListener {
+            var gender = ""
+            if(binding.gender.text.toString()=="F" || binding.gender.text.toString()=="f" || binding.gender.text.toString()=="Female" || binding.gender.text.toString()=="female"){
+                gender="Female"
+            }
+            else if(binding.gender.text.toString()=="M" || binding.gender.text.toString()=="m" || binding.gender.text.toString()=="Male" || binding.gender.text.toString()=="male"){
+                gender = "Male"
+            }
             val map = mapOf<String,String>(
                 "name" to binding.editNameTxt.text.toString(),
                 "gender" to gender
