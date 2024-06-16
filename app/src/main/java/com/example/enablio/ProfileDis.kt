@@ -103,10 +103,17 @@ class ProfileDis : AppCompatActivity() {
             dialog.show()
 
         }
+        var gender = ""
+        if(binding.gender.text.toString()=="F" || binding.gender.text.toString()=="Female" || binding.gender.text.toString()=="female"){
+            gender="Female"
+        }
+        else if(binding.gender.text.toString()=="M" || binding.gender.text.toString()=="Male" || binding.gender.text.toString()=="male"){
+            gender = "Male"
+        }
         binding.saveProfile.setOnClickListener {
             val map = mapOf<String,String>(
                 "name" to binding.editNameTxt.text.toString(),
-                "gender" to binding.gender.text.toString(),
+                "gender" to gender,
                 )
             rootFBRef.child(auth.currentUser?.uid.toString()).updateChildren(map).addOnSuccessListener {
                 Toast.makeText(this,"Updated Successfully!", Toast.LENGTH_SHORT).show()
