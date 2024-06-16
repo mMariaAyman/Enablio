@@ -18,7 +18,7 @@ class HomeVol : AppCompatActivity() {
         binding = ActivityHomeVolBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle("Home")
-
+        auth = FirebaseAuth.getInstance()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)

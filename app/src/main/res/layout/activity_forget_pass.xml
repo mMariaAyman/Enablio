@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter your phone number to reset your password"
+        android:text="Enter your Email to reset your password"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
@@ -35,28 +35,19 @@
         android:layout_marginTop="20dp"
         >
 
-        <TextView
-            android:layout_width="86dp"
-            android:layout_height="49dp"
-            android:layout_marginLeft="21dp"
-            android:background="@drawable/form"
-            android:gravity="center"
-            android:text="+20"
-            android:textSize="24sp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            />
-
         <EditText
+            android:id="@+id/emailTxt"
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:hint="Phone Number"
+            android:hint="Email Address"
             android:background="@drawable/form"
             android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:textColorHint="@color/gray"
             android:textColor="@color/black"
+            android:inputType="textEmailAddress"
             android:textSize="20sp"/>
     </LinearLayout>
     <Button

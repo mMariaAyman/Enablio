@@ -17,6 +17,7 @@ class HomeDis : AppCompatActivity() {
         binding = ActivityHomeDisBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle("Home")
+        auth=FirebaseAuth.getInstance()
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

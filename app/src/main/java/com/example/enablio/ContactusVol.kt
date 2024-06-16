@@ -14,6 +14,8 @@ class ContactusVol : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contactus)
         setTitle("Contact Us")
+        auth=FirebaseAuth.getInstance()
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
