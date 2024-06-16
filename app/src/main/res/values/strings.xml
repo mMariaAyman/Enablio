@@ -15,6 +15,7 @@
     <string name="facebook_app_id">7074327812666187</string>
     <string name="fb_login_protocol_scheme"></string>
     <string name="facebook_client_token">1d52643bf16b891e870738afcea2911f</string>
+    <string name="thank_you_message">Enablio is Thankful for your help, %s</string>
 
 
 </resources>

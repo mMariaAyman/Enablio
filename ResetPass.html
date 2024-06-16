@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        .container img {
+            width: 100%;
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .container input {
+            width: calc(100% - 40px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .container button:hover {
+            background-color: #0056b3;
+        }
+        .container .eye-icon {
+            position: absolute;
+            right: 25px;
+            top: calc(50% - 8px);
+            cursor: pointer;
+        }
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="D:\رابعة\Graduation Project\images\reset.jpg" alt="Security">
+        <h1>Create Your Password</h1>
+        <div class="input-container">
+            <input type="password" id="password" placeholder="Password">
+            <span class="eye-icon" onclick="togglePasswordVisibility('password')">&#128065;</span>
+        </div>
+        <div class="input-container">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+            <span class="eye-icon" onclick="togglePasswordVisibility('confirmPassword')">&#128065;</span>
+        </div>
+        <button onclick="resetPassword()">Confirm</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCwbFAaETqS2hD1ulKHk2deBh_XTD0BLzw",
+    authDomain: "enablio2023.firebaseapp.com",
+    databaseURL: "https://enablio2023-default-rtdb.firebaseio.com",
+    projectId: "enablio2023",
+    storageBucket: "enablio2023.appspot.com",
+    messagingSenderId: "810652911335",
+    appId: "1:810652911335:web:38e9b34bdb897fe43c0442",
+    measurementId: "G-6VYDFZNPPB"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</body>
+</html>

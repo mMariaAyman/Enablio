@@ -19,18 +19,19 @@
         android:layout_marginEnd="30dp"
         android:src="@drawable/home_vol"/>
 
-          <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-              android:layout_margin="30dp"
-            android:gravity="center"
-            android:text="Enablio is Thankful for your help, Clara"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+      <TextView
+          android:id="@+id/thankyoutxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+          android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="Enablio is Thankful for your help, Maria"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
-        <TextView
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Our team would like to Thank you for being here with us for them during their day. Your presence and encouragement made a huge difference "
