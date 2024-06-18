@@ -1,27 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Enablio" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Enablio" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <item name="android:colorBackground">@color/blue</item>
-
+        <item name="colorOnPrimary">@color/blue</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/blue</item>
+        <item name="colorSecondaryVariant">@color/blue</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:colorBackground">@color/blue</item>
+        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
+
         <!-- Customize your theme here. -->
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- ...other theme attributes... -->
-        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
-    </style>
-
     <style name="PopupMenuStyle" parent="Widget.AppCompat.PopupMenu">
         <item name="android:textColor">@color/black</item>
-        <item name="backgroundColor">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
     </style>
 </resources>
