@@ -2,6 +2,8 @@ package com.example.enablio
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.VideoView
+import androidx.lifecycle.Observer
 import com.example.enablio.databinding.ActivityHomeDisBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
@@ -42,10 +45,15 @@ import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoInvitationCallListe
 import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoUIKitPrebuiltCallConfigProvider
 import com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
 import com.zegocloud.uikit.service.defines.ZegoUIKitUser
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
+import java.io.InputStream
 import kotlin.random.Random
 
-class DisCustomView(context: Context, userID: String, invitee:String) : ZegoAudioVideoForegroundView(context, userID) {
+class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForegroundView(context,userID) {
     private var containerView = RelativeLayout(context)
     private var chatContainer = RelativeLayout(context)
     private val messageContainer = LinearLayout(context)  // New LinearLayout to contain messages
@@ -53,12 +61,12 @@ class DisCustomView(context: Context, userID: String, invitee:String) : ZegoAudi
     private val database = FirebaseDatabase.getInstance()
     private val messagesRef = database.getReference("messages")
 
-
     init {
-        initializeContainerView()
-        initializeChatContainer()
-        addViewsToContainer(userID)
-        listenForMessages()
+            initializeContainerView()
+            initializeChatContainer()
+            addViewsToContainer()
+            listenForMessages()
+
     }
 
     private fun initializeContainerView() {
@@ -97,39 +105,46 @@ class DisCustomView(context: Context, userID: String, invitee:String) : ZegoAudi
     }
 
 
-    private fun addViewsToContainer(userID: String) {
+    private fun addViewsToContainer() {
         containerView.addView(chatContainer)
         addView(containerView)
     }
     private fun listenForMessages() {
-
-        if(true) {
-            messagesRef.child("").addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+        messagesRef.addChildEventListener(object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val userKey = snapshot.key.toString()
+                if(userKey==userID) {
                     val message = snapshot.getValue().toString()
                     if (message != "") {
-                        addImageToContainer()
+                        find_match(message)
                     }
                 }
+            }
 
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-                override fun onChildRemoved(snapshot: DataSnapshot) {}
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-                override fun onCancelled(error: DatabaseError) {}
-            })
-        }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val userKey = snapshot.key.toString()
+                if(userKey==userID) {
+                    val message = snapshot.getValue().toString()
+                    if (message != "") {
+                        find_match(message)
+                    }
+                }
+            }
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
     }
 
 
-    private fun addImageToContainer() {
-        val t = TextView(context).apply{
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            visibility = GONE
-        }
+    private fun addImageToContainer(bitmap: Bitmap) {
         val imageView = ImageView(context).apply {
             layoutParams = ViewGroup.LayoutParams(400, 400)
             //setImageResource(R.drawable.moon)
         }
+        imageView.setImageBitmap(bitmap)
+        /*
         val videoView = VideoView(context).apply{
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -138,23 +153,68 @@ class DisCustomView(context: Context, userID: String, invitee:String) : ZegoAudi
             val storageRef = FirebaseStorage.getInstance().reference.child("/videos/test.mp4")
             val f = File.createTempFile("test", ".mp4")
 
-            storageRef.getFile(f).addOnSuccessListener {
-                val uri = Uri.fromFile(f)  // Use Uri.fromFile for local files
-                setVideoURI(uri)  // Assuming this is a method to set video URI in your video player
-            }.addOnFailureListener {
-                t.text = "Failed to download!"
-                t.visibility = View.VISIBLE  // Ensure 'View' is imported
-                messageContainer.addView(t)
-            }
 
             setOnPreparedListener { mediaPlayer -> mediaPlayer.isLooping = true }
 
         }
-        messageContainer.addView(videoView)
-        videoView.start()
+         */
+        messageContainer.addView(imageView)
+        //videoView.start()
 
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_DOWN) }
     }
+    private fun find_match(text:String){
+        val query = QueryModel(text)
+        RetrofitClient.instance.findMatch(query).enqueue(object : Callback<List<MatchResult>> {
+            override fun onResponse(call: Call<List<MatchResult>>, response: Response<List<MatchResult>>) {
+                if (response.isSuccessful) {
+                    val results = response.body()
+                    results?.let {
+                        // Handle the results
+                        Log.d("Result", it.joinToString("\n") { result ->
+                            "Word: ${result.word}, Path: ${result.path}, Label: ${result.label}, Type: ${result.type}" })
+
+                        download_file(it[0].path)
+                    }
+                } else {
+                    Log.d("Result", "Error: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<MatchResult>>, t: Throwable) {
+                // Handle the error
+                Log.d("Result",  "Error: ${t.message}")
+            }
+        })
+
+    }
+    private fun download_file(path: String){
+        RetrofitClient.instance.downloadFile(path).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { responseBody ->
+                        val inputStream: InputStream = responseBody.byteStream()
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                        addImageToContainer(bitmap)
+                        Log.d("paaaaaath", path)
+                    }
+                } else {
+                    Log.d("DownloadFile", "Error: ${response.code()}, ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("DownloadFile", "Error: ${t.message}")
+            }
+        })
+
+
+    }
+
+
 }
 
 
@@ -246,7 +306,8 @@ class HomeDis : AppCompatActivity() {
         val appID: Long = 2064059270 // your App ID of Zoge Cloud
         val appSign = "8b63cf644f9991ea897cfc113aece1b1943ad771c20f3f1aa0a340e24732bb29" // your App Sign of Zoge Cloud
         val application = application // Android's application context
-        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig().apply {
+        val callInvitationConfig = ZegoUIKitPrebuiltCallInvitationConfig()
+        callInvitationConfig.apply {
             provider = object : ZegoUIKitPrebuiltCallConfigProvider {
                 override fun requireConfig(invitationData: ZegoCallInvitationData): ZegoUIKitPrebuiltCallConfig {
                     val config: ZegoUIKitPrebuiltCallConfig = ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
@@ -262,7 +323,7 @@ class HomeDis : AppCompatActivity() {
                     config.audioVideoViewConfig.videoViewForegroundViewProvider = object :
                         ZegoForegroundViewProvider {
                         override fun getForegroundView(parent: ViewGroup, uiKitUser: ZegoUIKitUser): ZegoBaseAudioVideoForegroundView {
-                            return DisCustomView(parent.context, uiKitUser.userID, invitee)
+                            return DisCustomView(parent.context, uiKitUser.userID)
                         }
                     }
                     return config

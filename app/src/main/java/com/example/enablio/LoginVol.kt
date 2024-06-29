@@ -3,11 +3,13 @@ package com.example.enablio
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +23,11 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.VideoView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.marginBottom
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.enablio.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
@@ -41,10 +47,10 @@ import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationS
 import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoCallInvitationData
 import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoUIKitPrebuiltCallConfigProvider
 import com.zegocloud.uikit.service.defines.ZegoUIKitUser
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.File
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+// Shared ViewModel class
 
 class LoginVol : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -160,6 +166,7 @@ class VolCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
     private val database = FirebaseDatabase.getInstance()
     private val messagesRef = database.getReference("messages")
 
+
     init {
         initializeContainerView()
         initializeChatContainer()
@@ -261,8 +268,7 @@ class VolCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
             messagesRef.child(userID).setValue(text) // Send message to Firebase
             messageEditText.text.clear()
             updateChatMessagesView(text)
-            val client = OkHttpClient()
-            val request = Request.Builder().url("http://192.168.1.53:8000/").build()
+
         }
     }
 
@@ -272,3 +278,4 @@ class VolCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
     }
 
 }
+
