@@ -58,7 +58,7 @@ class ForgetPassDis : AppCompatActivity() {
                     sendResetPasswordEmail(email)
                 } else {
                     // Email does not exist in the database
-                    println("Email does not exist: $email")
+                    Toast.makeText(this@ForgetPassDis, "Email does not exist: $email", Toast.LENGTH_SHORT).show()
                 }
             }
 

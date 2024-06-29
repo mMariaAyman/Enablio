@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeDis"
     android:orientation="vertical"
     android:background="@drawable/home"
     android:layout_marginTop="30dp"
@@ -74,17 +73,13 @@
         android:textSize="25sp"
         android:textColor="@color/black"
         />
-        <Button
-            android:id="@+id/callBtn"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:text="Call"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/roboto"/>
+    <com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
+        android:id="@+id/callBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="#1AA8FF"
+        android:layout_marginTop="30dp"
+            />
 
 
     </LinearLayout>
