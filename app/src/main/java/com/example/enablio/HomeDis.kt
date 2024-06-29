@@ -174,7 +174,7 @@ class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
                         Log.d("Result", it.joinToString("\n") { result ->
                             "Word: ${result.word}, Path: ${result.path}, Label: ${result.label}, Type: ${result.type}" })
 
-                        download_file(it[0].path)
+                        download_file(it)
                     }
                 } else {
                     Log.d("Result", "Error: ${response.code()}")
@@ -188,28 +188,31 @@ class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
         })
 
     }
-    private fun download_file(path: String){
-        RetrofitClient.instance.downloadFile(path).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let { responseBody ->
-                        val inputStream: InputStream = responseBody.byteStream()
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        addImageToContainer(bitmap)
-                        Log.d("paaaaaath", path)
+    private fun download_file(list: List<MatchResult>){
+        list.forEach {
+            RetrofitClient.instance.downloadFile(it.path).enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { responseBody ->
+                            val inputStream: InputStream = responseBody.byteStream()
+                            val bitmap = BitmapFactory.decodeStream(inputStream)
+                            addImageToContainer(bitmap)
+                            Log.d("paaaaaath", it.path)
+                        }
+                    } else {
+                        Log.d("DownloadFile", "Error: ${response.code()}, ${response.message()}")
                     }
-                } else {
-                    Log.d("DownloadFile", "Error: ${response.code()}, ${response.message()}")
                 }
-            }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("DownloadFile", "Error: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.d("DownloadFile", "Error: ${t.message}")
+                }
+            })
+
+        }
 
 
     }
