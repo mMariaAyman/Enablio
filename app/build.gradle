@@ -79,6 +79,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
 
-
+    //Tensorflow lite
+    implementation 'org.tensorflow:tensorflow-lite:2.6.0'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.6.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
 
 }

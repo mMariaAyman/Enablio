@@ -209,6 +209,7 @@ class VolCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
 
         scrollView.addView(messageContainer)
         chatContainer.addView(scrollView)
+        scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_DOWN) }
     }
 
     private fun initializeChatMessagesView() {
@@ -217,10 +218,12 @@ class VolCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
             ViewGroup.LayoutParams.WRAP_CONTENT
         ).apply {
             addRule(RelativeLayout.ABOVE, messageEditText.id)
-            setMargins(0, 0, 0, 10) // Setting the bottom margin to 10dp
+            setMargins(16, 8, 16, 40) // Setting the bottom margin to 10dp
         }
         chatMessagesTextView.setPadding(16, 16, 16, 16)
         messageContainer.addView(chatMessagesTextView)
+        scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+
     }
 
     private fun initializeSendButton() {

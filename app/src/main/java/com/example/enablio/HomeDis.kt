@@ -6,20 +6,17 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.VideoView
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import com.example.enablio.databinding.ActivityHomeDisBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
@@ -39,17 +36,14 @@ import com.zegocloud.uikit.prebuilt.call.internal.ZegoAudioVideoForegroundView
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationService
 import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoCallInvitationData
-import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoCallType
-import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoCallUser
-import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoInvitationCallListener
 import com.zegocloud.uikit.prebuilt.call.invite.internal.ZegoUIKitPrebuiltCallConfigProvider
 import com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
 import com.zegocloud.uikit.service.defines.ZegoUIKitUser
+import im.zego.zegoexpress.ZegoExpressEngine
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 import java.io.InputStream
 import kotlin.random.Random
 
@@ -66,7 +60,6 @@ class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
             initializeChatContainer()
             addViewsToContainer()
             listenForMessages()
-
     }
 
     private fun initializeContainerView() {
@@ -138,28 +131,14 @@ class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
     }
 
 
-    private fun addImageToContainer(bitmap: Bitmap) {
+    private fun addImageToContainer(bitmap: Bitmap, type:String) {
         val imageView = ImageView(context).apply {
             layoutParams = ViewGroup.LayoutParams(400, 400)
             //setImageResource(R.drawable.moon)
         }
         imageView.setImageBitmap(bitmap)
-        /*
-        val videoView = VideoView(context).apply{
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                400
-            )
-            val storageRef = FirebaseStorage.getInstance().reference.child("/videos/test.mp4")
-            val f = File.createTempFile("test", ".mp4")
-
-
-            setOnPreparedListener { mediaPlayer -> mediaPlayer.isLooping = true }
-
-        }
-         */
         messageContainer.addView(imageView)
-        //videoView.start()
+
 
         scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_DOWN) }
     }
@@ -198,8 +177,10 @@ class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
                     if (response.isSuccessful) {
                         response.body()?.let { responseBody ->
                             val inputStream: InputStream = responseBody.byteStream()
-                            val bitmap = BitmapFactory.decodeStream(inputStream)
-                            addImageToContainer(bitmap)
+                            if(it.type=="image") {
+                                val bitmap = BitmapFactory.decodeStream(inputStream)
+                                addImageToContainer(bitmap, it.type)
+                            }
                             Log.d("paaaaaath", it.path)
                         }
                     } else {
@@ -218,14 +199,18 @@ class DisCustomView(context: Context, userID: String) : ZegoAudioVideoForeground
     }
 
 
+
+
 }
 
 
 class HomeDis : AppCompatActivity() {
-    private lateinit var binding:ActivityHomeDisBinding
+    private lateinit var binding: ActivityHomeDisBinding
     private lateinit var auth:FirebaseAuth
     private lateinit var callBtn: ZegoSendCallInvitationButton
     private lateinit var database: DatabaseReference
+    private lateinit var zegoExpressEngine: ZegoExpressEngine
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -333,6 +318,18 @@ class HomeDis : AppCompatActivity() {
                 }
             }
         }
+//        val config = ZegoEngineConfig()
+//        ZegoExpressEngine.setEngineConfig(config)
+//        zegoExpressEngine = ZegoExpressEngine.createEngine(
+//            appID,
+//            appSign,
+//            true,
+//            ZegoScenario.GENERAL,
+//            application,
+//            null
+//        )
+//
+//        zegoExpressEngine.loginRoom("room1", ZegoUser(userID))
 
         val notificationConfig = ZegoNotificationConfig()
         notificationConfig.sound = "zego_uikit_sound_call"
